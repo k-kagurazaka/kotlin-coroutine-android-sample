@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
-import io.reactivex.Single
-import io.reactivex.SingleSource
-import io.reactivex.functions.BiFunction
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -14,10 +11,7 @@ import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.rx2.await
 import kotlinx.coroutines.experimental.rx2.rxSingle
-import org.jetbrains.anko.button
-import org.jetbrains.anko.matchParent
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.verticalLayout
+import org.jetbrains.anko.*
 import kotlin.system.measureTimeMillis
 
 object AsyncModel {
@@ -123,7 +117,3 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
-
-// I desire RxKotlin2...
-fun <T, U, R> Single<T>.zipWith(other: SingleSource<U>, zipper: (T, U) -> R)
-        = zipWith(other, BiFunction { t1: T, t2: U -> zipper(t1, t2) })
