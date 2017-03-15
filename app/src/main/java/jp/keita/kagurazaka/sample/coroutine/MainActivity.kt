@@ -104,10 +104,9 @@ class MainActivity : AppCompatActivity() {
 
         var message = ""
         val elapsed = measureTimeMillis {
-            val ten = RxModel.returnTenAsync()
-            val twenty = RxModel.returnTwentyAsync()
-            // message += "result = ${ten.await() * twenty.await()}" // serial
-            message += "result = ${ten.zipWith(twenty) { t1, t2 -> t1 * t2 }.await()}" // parallel
+            val ten = async(CommonPool) { RxModel.returnTenAsync().await() }
+            val twenty = async(CommonPool) { RxModel.returnTwentyAsync().await() }
+            message += "result = ${ten.await() * twenty.await()}"
         }
 
         showToast("$message, time = $elapsed [ms]")
