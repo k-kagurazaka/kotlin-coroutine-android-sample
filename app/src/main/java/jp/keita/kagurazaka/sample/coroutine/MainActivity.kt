@@ -14,7 +14,10 @@ import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.rx2.await
 import kotlinx.coroutines.experimental.rx2.rxSingle
-import org.jetbrains.anko.*
+import org.jetbrains.anko.button
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.onClick
+import org.jetbrains.anko.verticalLayout
 import kotlin.system.measureTimeMillis
 
 object AsyncModel {
@@ -89,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         val elapsed = measureTimeMillis {
             val ten = AsyncModel.returnTenAsync()
             val twenty = AsyncModel.returnTwentyAsync()
-            message += "${ten.await() * twenty.await()}"
+            message += "result = ${ten.await() * twenty.await()}"
         }
 
         showToast("$message, time = $elapsed [ms]")
@@ -103,8 +106,8 @@ class MainActivity : AppCompatActivity() {
         val elapsed = measureTimeMillis {
             val ten = RxModel.returnTenAsync()
             val twenty = RxModel.returnTwentyAsync()
-            // message += "${ten.await() * twenty.await()}" // serial
-            message += "${ten.zipWith(twenty) { t1, t2 -> t1 * t2 }.await()}" // parallel
+            // message += "result = ${ten.await() * twenty.await()}" // serial
+            message += "result = ${ten.zipWith(twenty) { t1, t2 -> t1 * t2 }.await()}" // parallel
         }
 
         showToast("$message, time = $elapsed [ms]")
